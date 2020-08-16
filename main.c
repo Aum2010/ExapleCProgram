@@ -83,7 +83,7 @@ void swapwithpointer(int *x,int *y){
 }
 
 void pointofpointer(void) {
-    int *p , **q ;
+    int *p , **q ,a = 10;
     int***r ;
     p = &a;
     q = &p;
@@ -157,22 +157,21 @@ void test4(void){
 
 int main()
 {
-    #if (0)
+    #if (1)
     int a = 10 , b = 1;
 
     printf("a = %d | b = %d\n" , a , b);
     printf("&a = %p | &b = %p\n" , &a , &b);
 
-    swapwithpointer((int *)1,(int *)2);
+    swapwithpointer(&a,&b);
 
-    swapnopointer(1,2);
+
     printf("&a = %p | &b = %p\n" , &a , &b);
     printf("a = %d | b = %d\n" , a , b);
-
-
     #endif
 
-
+   // swapnopointer(a,b);
+    //swapwithpointer((int *)1,(int *)2);
     #if (0)
     int a[] = {1,2,1,2};
     int size = sizeof(a) / sizeof(a[0]) ; //--> 4*7 / 4 = 7
@@ -183,7 +182,7 @@ int main()
     #endif
 
 
-    #if (1)
+    #if (0)
     test4();
     #endif
 
