@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 extern int a;
 
@@ -155,9 +156,83 @@ void test4(void){
     printf("b[0] : %d | b[1] : %d | b[2] : %d | b[3] : %d | b[4] : %d\n\n",b[0],b[1],b[2],b[3],b[4]);
 }
 
+void testalloc(void) {
+
+    int i , n ;
+    printf("Enter the number : ");
+    scanf("%d" , &n);
+    int *ptr = (int *)malloc(n*sizeof(int));
+
+    if(ptr == NULL) {
+        printf("Memory not available");
+        exit(1);
+    }
+
+    for(i = 0 ; i < n ; i++){
+        printf("Enter an integer : ");
+        scanf("%d" ,ptr + i);
+    }
+    for(i = 0 ; i < n ; i++){
+        printf("Value[%d] %d | Add : %p\n" , i , *(ptr + i) , ptr + i);
+    }
+
+}
+
+void testrealloc(void) {
+    int i , n ;
+    printf("Enter the number : ");
+    scanf("%d" ,&n);
+    int *ptr = (int*)malloc(n*sizeof(int));
+
+    if(ptr == NULL){
+        printf("Memory not available");
+        exit(1);
+    }
+
+    for(i = 0 ; i < n ; i++){  //--> for Enter number amount n
+        printf("Your Number : ");
+        scanf("%d" , ptr + i);
+    }
+
+    printf("Enter more 2 number!!\n");
+    ptr = (int*)realloc(ptr,(2+n)*sizeof(int));
+
+
+    for( i = n ;  i < n + 2 ; i++){  //--> for Enter number amount 2
+        printf("Your Number : ");
+        scanf("%d" , ptr + i);
+    }
+
+    for(i = 0 ; i < n+2; i++){
+        printf("Value[%d] : %d | Add : %p \n", i , *(ptr+i) , ptr + i );
+    }
+
+
+}
+
+int * getRannd(int n) {
+    printf("\n----------------FUNCTION--------------------\n\n");
+    int i;
+    //static int r[10];
+    int *r = (int *)malloc(n*sizeof(int));
+
+    srand(time(NULL));
+    for(i = 0 ; i < n ; i++) {
+
+        r[i] = rand();
+        printf("IN FUNCTION : r[%d] VALUE : %d : Add %p \n",i , r[i] , (r+i) );
+    }
+
+    return r;
+}
+
+int Add(int a,int b){
+    return a + b;
+}
+
 int main()
 {
-    #if (1)
+    #if (0)
     int a = 10 , b = 1;
 
     printf("a = %d | b = %d\n" , a , b);
@@ -199,8 +274,41 @@ int main()
     printf("a = %d | b = %d\n" , tempint.a1 , tempint.a2);
     #endif
 
+    #if(0)
+
+    int* ptr;
+    int i,n;
+    printf("Enter Your Amount Random : ");
+    scanf("%d" , &n);
+    ptr = getRannd(n);
+    printf("\n----------------MAIN--------------------\n\n");
+    for(i = 0 ; i < n ; i++){
+
+        printf("IN MAIN : r[%d] VALUE : %d : Add %p \n",i , ptr[i] , (ptr+i) );
+
+    }
+    free(ptr);
+    #endif
+
+    #if(1)
+    int c;
+    printf("Add var : C  %p\n" , &c);
+    int (*p)(int,int) = Add;
+
+
+
+    c = (*p)(5,3);
+    printf("Add : %p\n" , p);
+    printf("%d\n" , c);
+    printf("Add var : C  %p" , &c);
+    #endif
+
     //pointofpointer();
     //test11();
+    //testalloc();
+    //testrealloc();
+
+
     return 0;
 
 }
